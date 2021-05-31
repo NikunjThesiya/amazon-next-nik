@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: "Poppins", sans-serif;
+}
+
+@layer components {
+	.link {
+		@apply cursor-pointer hover:underline;
+	}
+
+	.header-link {
+		@apply flex items-center space-x-2 border hover:border-white border-transparent cursor-pointer py-1 px-2 rounded;
+	}
+
+	.sidebar-link {
+		@apply px-4 py-3 text-xs md:text-sm cursor-pointer hover:bg-gray-300;
+	}
+
+	.hide-scrollbar::-webkit-scrollbar {
+		width: 0px;
+		background: transparent; /* make scrollbar transparent */
+	}
+}
