@@ -25,6 +25,9 @@ function Banner() {
 				interval={5000}
 			>
 				<div>
+					<img loading="lazy" src={Banner8} alt="banner1" />
+				</div>
+				<div>
 					<img loading="lazy" src={Banner1} alt="banner1" />
 				</div>
 				<div>
@@ -43,9 +46,6 @@ function Banner() {
 					<img loading="lazy" src={Banner6} alt="banner1" />
 				</div>
 
-				<div>
-					<img loading="lazy" src={Banner8} alt="banner1" />
-				</div>
 				<div>
 					<img loading="lazy" src={Banner9} alt="banner1" />
 				</div>

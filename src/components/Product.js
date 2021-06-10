@@ -27,7 +27,7 @@ function Product({ id, title, price, description, category, image }) {
 					<img src={Prime} alt="prime" className="w-16 object-contain" />
 				)}
 			</div>
-			<button className="bg-yellow-200 text-sm py-2 rounded focus:outline-none hover:bg-yellow-300">
+			<button className="bg-yellow-200 text-sm py-2.5 rounded focus:outline-none hover:bg-yellow-300">
 				Add to Cart
 			</button>
 		</div>

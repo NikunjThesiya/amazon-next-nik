@@ -145,6 +145,7 @@ function Header() {
 			<AnimatePresence>
 				<motion.div
 					className="z-50 flex flex-col fixed top-0 h-screen w-72 md:w-96 bg-gray-100 overflow-y-scroll hide-scrollbar divide-y-2 divide-gray-400 shadow-2xl"
+					initial={{ opacity: 0, x: "-100%" }}
 					animate={sidebar ? "open" : "closed"}
 					variants={variants}
 				>
