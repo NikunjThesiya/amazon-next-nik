@@ -10,16 +10,21 @@ import {
 import { RiShoppingCartLine } from "react-icons/ri";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { signIn, signOut, useSession } from "next-auth/client";
+import UserImg from "../images/user.svg";
 
 function Header() {
 	const [sidebar, setSidebar] = useState(false);
+	const [userIconMenu, setUserIconMenu] = useState(false);
+	const [session] = useSession();
+
 	const variants = {
 		open: { opacity: 1, x: 0 },
 		closed: { opacity: 0, x: "-100%" },
 	};
 
 	return (
-		<header>
+		<header className="sticky z-50 top-0">
 			{/* Top Nav */}
 			<div className="flex items-center bg-amazon_blue py-2 px-4 md:space-x-5 space-x-3">
 				<div className="flex md:hidden flex-col items-center">
@@ -50,22 +55,60 @@ function Header() {
 
 				{/* Right */}
 				<div className="flex space-x-5 md:space-x-9 items-center text-gray-200">
-					<div className="hidden md:flex flex-col items-start text-xs link">
-						<p>Hello! Nikunj Thesiya</p>
+					<div className="hidden lg:flex flex-col items-start text-xs link">
+						<p>{session ? `Hello! ${session.user.name}` : `Sign In`}</p>
 						<p className="font-semibold text-sm">Account & Lists</p>
 					</div>
-					<div className="hidden md:flex flex-col items-start text-xs link">
+					<div className="hidden lg:flex flex-col items-start text-xs link">
 						<p>Returns</p>
 						<p className="font-semibold text-sm">& Orders</p>
 					</div>
 
-					<div className="flex relative items-center px-3">
-						<span className="bg-gray-100 bg-opacity-20 text-white p-2 rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25">
-							<RiShoppingCartLine />
+					<div className="flex space-x-4 items-center">
+						<span className="bg-gray-100 bg-opacity-20 text-white rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25 w-9 h-9">
+							<img
+								src={session ? session.user.image : UserImg}
+								alt="User Image"
+								className="rounded-full"
+								onClick={() => setUserIconMenu(!userIconMenu)}
+							/>
+
+							<div
+								className={
+									userIconMenu
+										? "flex relative top-3 right-0 bg-amazon_blue border border-gray-50 shadow-md rounded-xl text-gray-50 w-24 text-xs md:text-sm z-50  flex-col items-center justify-center"
+										: "hidden"
+								}
+							>
+								<p className="py-3 px-2 hover:bg-amazon_blue-light  rounded-xl w-full text-center">
+									Orders
+								</p>
+								{session ? (
+									<p
+										className="py-3 px-2 hover:bg-amazon_blue-light rounded-xl w-full text-center"
+										onClick={signOut}
+									>
+										Sign Out
+									</p>
+								) : (
+									<p
+										className="py-3 px-2 hover:bg-amazon_blue-light rounded-xl w-full text-center"
+										onClick={signIn}
+									>
+										Sign In
+									</p>
+								)}
+							</div>
 						</span>
-						<span className="absolute top-0 right-px bg-yellow-500 h-5 w-5 rounded-full text-xs flex items-center justify-center">
-							<span className="">0</span>
-						</span>
+
+						<div className="flex relative items-center px-3">
+							<span className="bg-gray-100 bg-opacity-20 text-white p-2 rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25">
+								<RiShoppingCartLine />
+							</span>
+							<span className="absolute top-0 right-px bg-yellow-500 h-5 w-5 rounded-full text-xs flex items-center justify-center">
+								<span className="">0</span>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -87,7 +130,10 @@ function Header() {
 
 			{/* Bottom Nav */}
 			<div className="flex items-center bg-amazon_blue-light text-white text-xs md:text-sm h-11 px-4 lg:px-9 space-x-1 justify-between lg:justify-start">
-				<p className="hidden lg:flex items-center space-x-2 font-semibold border hover:border-white border-transparent cursor-pointer py-1 px-2 rounded" onClick={() => setSidebar(true)}>
+				<p
+					className="hidden lg:flex items-center space-x-2 font-semibold border hover:border-white border-transparent cursor-pointer py-1 px-2 rounded"
+					onClick={() => setSidebar(true)}
+				>
 					<HiOutlineMenu className="text-xl" />
 					<span>All</span>
 				</p>
