@@ -1,7 +1,9 @@
+import Header from "../components/Header";
+
 function Checkout() {
 	return (
-		<div>
-			<h1>THis IS CheckOUT PAgE</h1>
+		<div className="bg-gray-100">
+			<Header />
 		</div>
 	);
 }

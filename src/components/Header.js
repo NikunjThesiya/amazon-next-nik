@@ -11,12 +11,15 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import UserImg from "../images/user.svg";
 
 function Header() {
 	const [sidebar, setSidebar] = useState(false);
 	const [userIconMenu, setUserIconMenu] = useState(false);
 	const [session] = useSession();
+
+	const router = useRouter();
 
 	const variants = {
 		open: { opacity: 1, x: 0 },
@@ -26,7 +29,7 @@ function Header() {
 	return (
 		<header className="sticky z-50 top-0">
 			{/* Top Nav */}
-			<div className="flex items-center bg-amazon_blue py-2 px-4 md:space-x-5 space-x-3">
+			<div className="flex items-center bg-amazon_blue py-3 px-4 md:space-x-5 space-x-3">
 				<div className="flex md:hidden flex-col items-center">
 					<motion.span
 						className="bg-gray-100 bg-opacity-10 text-white p-2 rounded-xl text-xl cursor-pointer hover:bg-opacity-25"
@@ -35,10 +38,11 @@ function Header() {
 						<HiOutlineMenu className="text-white text-opacity-70" />
 					</motion.span>
 				</div>
-				<div className="mt-2 flex items-center flex-grow sm:flex-grow-0 ">
+				<div className="mt-2 flex items-center flex-grow sm:flex-grow-0">
 					<img
 						src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-						className="w-16 md:w-20 object-contain"
+						className="w-16 md:w-20 object-contain cursor-pointer"
+						onClick={() => router.push("/")}
 					/>
 				</div>
 
@@ -64,7 +68,7 @@ function Header() {
 						<p className="font-semibold text-sm">& Orders</p>
 					</div>
 
-					<div className="flex space-x-4 items-center">
+					<div className="flex space-x-2 items-center">
 						<span className="bg-gray-100 bg-opacity-20 text-white rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25 w-9 h-9">
 							<img
 								src={session ? session.user.image : UserImg}
@@ -102,7 +106,10 @@ function Header() {
 						</span>
 
 						<div className="flex relative items-center px-3">
-							<span className="bg-gray-100 bg-opacity-20 text-white p-2 rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25">
+							<span
+								className="bg-gray-100 bg-opacity-20 text-white p-2 rounded-full text-xl md:text-2xl cursor-pointer hover:bg-opacity-25"
+								onClick={() => router.push("/checkout")}
+							>
 								<RiShoppingCartLine />
 							</span>
 							<span className="absolute top-0 right-px bg-yellow-500 h-5 w-5 rounded-full text-xs flex items-center justify-center">
@@ -179,26 +186,26 @@ function Header() {
 						<span>Sell</span>
 					</p>
 				</div>
-				<div className="flex lg:hidden items-center">
-					<p className="flex items-center space-x-2 border hover:border-white border-transparent cursor-pointer py-1 px-2 rounded-md bg-white bg-opacity-10">
-						<HiOutlineLocationMarker className="text-xl" />
-						<span>Deliver to Nikunj</span>
-					</p>
-				</div>
 			</div>
 
 			{/* Sidebar */}
 			<AnimatePresence>
 				<motion.div
-					className="z-50 flex flex-col fixed top-0 h-screen w-72 md:w-96 bg-gray-100 overflow-y-scroll hide-scrollbar divide-y-2 divide-gray-400 shadow-2xl"
+					className="z-50 flex flex-col fixed top-0 h-screen w-72 md:w-96 bg-gray-100 overflow-y-scroll hide-scrollbar divide-y-2 divide-gray-400 shadow-2xl bg-opacity-70 backdrop-filter backdrop-blur-lg"
 					initial={{ opacity: 0, x: "-100%" }}
 					animate={sidebar ? "open" : "closed"}
 					variants={variants}
 				>
 					<div className="flex items-center justify-between bg-amazon_blue-light p-4 sticky top-0">
-						<p className="text-white text-base md:text-lg font-bold">
-							Hello, Nikunj Thesiya
-						</p>
+						{session ? (
+							<p className="text-white text-base md:text-lg font-bold">
+								Hello, {session.user.name}
+							</p>
+						) : (
+							<p className="text-white text-base md:text-lg font-bold">
+								Sign In
+							</p>
+						)}
 
 						<span
 							className="bg-gray-100 bg-opacity-25 text-white p-2 rounded-xl text-xl cursor-pointer hover:bg-opacity-10"
@@ -209,9 +216,16 @@ function Header() {
 					</div>
 
 					{/* Mobile First Menu */}
-					<div className="flex md:hidden flex-col">
-						<p className="sidebar-link">Home</p>
-						<p className="sidebar-link">Account</p>
+					<div className="flex flex-col">
+						<p className="sidebar-link" onClick={() => router.push("/")}>
+							Home
+						</p>
+						<p
+							className="sidebar-link"
+							onClick={() => router.push("/checkout")}
+						>
+							Go to Cart
+						</p>
 						<p className="sidebar-link">Orders</p>
 						<p className="sidebar-link">Customer Services</p>
 					</div>
@@ -232,7 +246,11 @@ function Header() {
 						<p className="sidebar-link">Notifications</p>
 						<p className="sidebar-link">Default Purchase Settings</p>
 						<p className="sidebar-link">Legal</p>
-						<p className="sidebar-link">Sign Out</p>
+						{session && (
+							<p className="sidebar-link cursor-pointer" onClick={signOut}>
+								Sign Out
+							</p>
+						)}
 					</div>
 				</motion.div>
 			</AnimatePresence>
