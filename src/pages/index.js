@@ -3,6 +3,8 @@ import Banner from "../components/Banner";
 import Header from "../components/Header";
 import favicon from "../images/favicon.svg";
 import ProductFeed from "../components/ProductFeed";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home({ products }) {
 	return (
@@ -27,6 +29,7 @@ export default function Home({ products }) {
 				<Banner />
 				<ProductFeed products={products} />
 			</main>
+			<ToastContainer />
 		</div>
 	);
 }

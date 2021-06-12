@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 import {
@@ -13,11 +13,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import UserImg from "../images/user.svg";
+import { useSelector } from "react-redux";
+import { selectItems } from "../slices/basketSlice";
 
 function Header() {
 	const [sidebar, setSidebar] = useState(false);
 	const [userIconMenu, setUserIconMenu] = useState(false);
 	const [session] = useSession();
+	const items = useSelector(selectItems);
 
 	const router = useRouter();
 
@@ -113,7 +116,7 @@ function Header() {
 								<RiShoppingCartLine />
 							</span>
 							<span className="absolute top-0 right-px bg-yellow-500 h-5 w-5 rounded-full text-xs flex items-center justify-center">
-								<span className="">0</span>
+								<span className="">{items.length}</span>
 							</span>
 						</div>
 					</div>
@@ -189,69 +192,77 @@ function Header() {
 			</div>
 
 			{/* Sidebar */}
-			<AnimatePresence>
+			<AnimatePresence className="w-full">
 				<motion.div
-					className="z-50 flex flex-col fixed top-0 h-screen w-72 md:w-96 bg-gray-100 overflow-y-scroll hide-scrollbar divide-y-2 divide-gray-400 shadow-2xl bg-opacity-70 backdrop-filter backdrop-blur-lg"
+					className="flex z-50 w-full fixed top-0 h-screen"
 					initial={{ opacity: 0, x: "-100%" }}
 					animate={sidebar ? "open" : "closed"}
 					variants={variants}
+					id="sidebar"
 				>
-					<div className="flex items-center justify-between bg-amazon_blue-light p-4 sticky top-0">
-						{session ? (
-							<p className="text-white text-base md:text-lg font-bold">
-								Hello, {session.user.name}
+					<div className="flex flex-col w-72 md:w-96 bg-gray-100 overflow-y-scroll hide-scrollbar divide-y-2 divide-gray-400 shadow-2xl bg-opacity-70 backdrop-filter backdrop-blur-lg">
+						<div className="flex items-center justify-between bg-amazon_blue-light p-4 sticky top-0">
+							{session ? (
+								<p className="text-white text-base md:text-lg font-bold">
+									Hello, {session.user.name}
+								</p>
+							) : (
+								<p className="text-white text-base md:text-lg font-bold">
+									Sign In
+								</p>
+							)}
+
+							<span
+								className="bg-gray-100 bg-opacity-25 text-white p-2 rounded-xl text-xl cursor-pointer hover:bg-opacity-10"
+								onClick={() => setSidebar(false)}
+							>
+								<IoMdClose className="text-white text-opacity-70" />
+							</span>
+						</div>
+
+						{/* Mobile First Menu */}
+						<div className="flex flex-col">
+							<p className="sidebar-link" onClick={() => router.push("/")}>
+								Home
 							</p>
-						) : (
-							<p className="text-white text-base md:text-lg font-bold">
-								Sign In
+							<p
+								className="sidebar-link"
+								onClick={() => router.push("/checkout")}
+							>
+								Go to Cart
 							</p>
-						)}
+							<p className="sidebar-link">Orders</p>
+							<p className="sidebar-link">Customer Services</p>
+						</div>
 
-						<span
-							className="bg-gray-100 bg-opacity-25 text-white p-2 rounded-xl text-xl cursor-pointer hover:bg-opacity-10"
-							onClick={() => setSidebar(false)}
-						>
-							<IoMdClose className="text-white text-opacity-70" />
-						</span>
+						{/* Explore */}
+						<div className="flex flex-col">
+							<span className="px-4 py-3 font-semibold text-lg">Explore</span>
+							<p className="sidebar-link">Electronics</p>
+							<p className="sidebar-link">Computer & Accseeories</p>
+							<p className="sidebar-link">Apparel</p>
+							<p className="sidebar-link">Video Games</p>
+							<p className="sidebar-link">See All Categories</p>
+						</div>
+
+						{/* Settings */}
+						<div className="flex flex-col">
+							<span className="px-4 py-3 font-semibold text-lg">Settings</span>
+							<p className="sidebar-link">Notifications</p>
+							<p className="sidebar-link">Default Purchase Settings</p>
+							<p className="sidebar-link">Legal</p>
+							{session && (
+								<p className="sidebar-link cursor-pointer" onClick={signOut}>
+									Sign Out
+								</p>
+							)}
+						</div>
 					</div>
 
-					{/* Mobile First Menu */}
-					<div className="flex flex-col">
-						<p className="sidebar-link" onClick={() => router.push("/")}>
-							Home
-						</p>
-						<p
-							className="sidebar-link"
-							onClick={() => router.push("/checkout")}
-						>
-							Go to Cart
-						</p>
-						<p className="sidebar-link">Orders</p>
-						<p className="sidebar-link">Customer Services</p>
-					</div>
-
-					{/* Explore */}
-					<div className="flex flex-col">
-						<span className="px-4 py-3 font-semibold text-lg">Explore</span>
-						<p className="sidebar-link">Electronics</p>
-						<p className="sidebar-link">Computer & Accseeories</p>
-						<p className="sidebar-link">Apparel</p>
-						<p className="sidebar-link">Video Games</p>
-						<p className="sidebar-link">See All Categories</p>
-					</div>
-
-					{/* Settings */}
-					<div className="flex flex-col">
-						<span className="px-4 py-3 font-semibold text-lg">Settings</span>
-						<p className="sidebar-link">Notifications</p>
-						<p className="sidebar-link">Default Purchase Settings</p>
-						<p className="sidebar-link">Legal</p>
-						{session && (
-							<p className="sidebar-link cursor-pointer" onClick={signOut}>
-								Sign Out
-							</p>
-						)}
-					</div>
+					<div
+						className="flex-grow bg-black h-screen bg-opacity-25"
+						onClick={() => setSidebar(false)}
+					></div>
 				</motion.div>
 			</AnimatePresence>
 		</header>
