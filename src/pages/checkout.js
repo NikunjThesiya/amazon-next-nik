@@ -44,7 +44,7 @@ function Checkout() {
 				{/* Right */}
 				<div className="">
 					{items.length > 0 && (
-						<div className="flex flex-col items-center bg-white m-5 px-10 py-10 rounded-2xl lg:rounded-none">
+						<div className="md:sticky md:top-32 flex flex-col items-center bg-white m-5 px-10 py-10 rounded-2xl lg:rounded-none">
 							<h2 className="whitespace-nowrap">
 								Subtotal ({items.length} Items)
 							</h2>
