@@ -7,12 +7,10 @@ import Rating from "./Rating";
 import { toast } from "react-toastify";
 
 function Product({ id, title, price, description, category, image }) {
-	const dispatch = useDispatch();
 	const [rating] = useState(Math.floor(Math.random() * 5) + 1);
 	const [hasPrime] = useState(Math.random() < 0.5);
-
+	const dispatch = useDispatch();
 	const items = useSelector(selectItems);
-
 	const addItemToBasket = () => {
 		const product = {
 			id,
@@ -21,6 +19,8 @@ function Product({ id, title, price, description, category, image }) {
 			description,
 			category,
 			image,
+			rating,
+			hasPrime,
 		};
 		dispatch(addToBasket(product));
 
