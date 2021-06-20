@@ -1,3 +1,5 @@
+import Head from "next/head";
+import favicon from "../images/favicon.svg";
 import { useSelector } from "react-redux";
 import CheckoutProduct from "../components/CheckoutProduct";
 import Header from "../components/Header";

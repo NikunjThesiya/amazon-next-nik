@@ -1,3 +1,5 @@
+import Head from "next/head";
+import favicon from "../images/favicon.svg";
 import moment from "moment";
 import { getSession, useSession } from "next-auth/client";
 import db from "../../firebase";

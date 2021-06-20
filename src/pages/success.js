@@ -1,3 +1,5 @@
+import Head from "next/head";
+import favicon from "../images/favicon.svg";
 import Header from "../components/Header";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
