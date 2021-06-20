@@ -32,7 +32,7 @@ function CheckoutProduct({
 				<p className="text-sm md:text-base font-medium">{title}</p>
 				<Rating rating={rating} />
 				<div className="font-medium text-gray-500 text-sm md:text-lg">
-					<Currency quantity={price} currency="USD" />
+					<Currency quantity={price} currency="INR" />
 				</div>
 				<p className="text-xs line-clamp-1 md:line-clamp-3 my-1 md:my-2">
 					{description}

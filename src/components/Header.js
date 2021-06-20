@@ -66,7 +66,10 @@ function Header() {
 						<p>{session ? `Hello! ${session.user.name}` : `Sign In`}</p>
 						<p className="font-semibold text-sm">Account & Lists</p>
 					</div>
-					<div className="hidden lg:flex flex-col items-start text-xs link">
+					<div
+						className="hidden lg:flex flex-col items-start text-xs link"
+						onClick={() => router.push("/orders")}
+					>
 						<p>Returns</p>
 						<p className="font-semibold text-sm">& Orders</p>
 					</div>

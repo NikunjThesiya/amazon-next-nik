@@ -5,6 +5,7 @@ import favicon from "../images/favicon.svg";
 import ProductFeed from "../components/ProductFeed";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getSession } from "next-auth/client";
 
 export default function Home({ products }) {
 	return (
@@ -35,10 +36,11 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps(context) {
+	const session = await getSession(context);
 	const products = await fetch("https://fakestoreapi.com/products").then(
 		(res) => res.json()
 	);
-	return { props: { products } };
+	return { props: { products, session } };
 }
 
 // 'https://fakestoreapi.com/products'
