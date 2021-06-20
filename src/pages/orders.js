@@ -8,6 +8,16 @@ function Orders({ orders }) {
 	const [session] = useSession();
 	return (
 		<div>
+			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta charSet="utf-8" />
+				<meta
+					name="description"
+					content="This is Amazon clone built by Nikunj Thesiya."
+				/>
+				<title>Orders</title>
+				<link rel="icon" href={favicon} />
+			</Head>
 			<Header />
 			<main className="max-w-screen-lg mx-auto p-10">
 				<h1 className="text-xl md:text-2xl lg:text-3xl text-gray-700 border-b mb-2 pb-2 border-yellow-400">

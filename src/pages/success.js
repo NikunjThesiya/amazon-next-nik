@@ -6,6 +6,16 @@ function success() {
 	const router = useRouter();
 	return (
 		<div className="bg-gray-100 h-screen">
+			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta charSet="utf-8" />
+				<meta
+					name="description"
+					content="This is Amazon clone built by Nikunj Thesiya."
+				/>
+				<title>Order Confirmed</title>
+				<link rel="icon" href={favicon} />
+			</Head>
 			<Header />
 
 			<main className="max-w-screen-lg mx-auto mt-4 ">

@@ -36,6 +36,16 @@ function Checkout() {
 
 	return (
 		<div className="bg-white md:bg-gray-100 pb-6">
+			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta charSet="utf-8" />
+				<meta
+					name="description"
+					content="This is Amazon clone built by Nikunj Thesiya."
+				/>
+				<title>checkout</title>
+				<link rel="icon" href={favicon} />
+			</Head>
 			<Header />
 			<main className="lg:flex max-w-screen-2xl mx-auto">
 				{/* Left */}
